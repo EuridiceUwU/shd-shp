@@ -84,6 +84,22 @@ export default function Cart() {
         autor: "just_yarny",
       },
     },
+    {
+      id: 4,
+      name: "Pocchaco y pollito, nivel fácil",
+      description: "Lindo patrón de pochhaco y su pollito 🐥",
+      price: 120,
+      image: require("@/assets/images/Amigurumi4.png"),
+      details: {
+        materials:
+          "Hilo de algodón, aguja de crochet, relleno, fieltro color café",
+        difficulty: "Fácil",
+        estimatedTime: "5-6 horas",
+        likes: 80,
+        shoppers: 100,
+        autor: "bunny_crochet",
+      },
+    },
   ]);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -101,57 +117,58 @@ export default function Cart() {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Eurigurumis</Text>
+      </View>
       <ScrollView>
         <View style={styles.ViewTop}>
-          <Text style={{ color: colors.text, fontSize: 35 }}>
-            Patrones amigurumis 🧶
+          <Text style={{ color: colors.text, fontSize: 27 }}>
+            Patrones amigurumi 🧶
           </Text>
         </View>
 
-        {products.map((product) => (
-          <View key={product.id} style={styles.viewCard}>
-            <View style={styles.imageContainer}>
-              <Image source={product.image} style={styles.productImage} />
-            </View>
-            <View style={styles.productDetails}>
-              <Text style={styles.productName}>{product.name}</Text>
-              <Text style={styles.productDescription}>
-                {product.description}
-              </Text>
-              <Text style={styles.productPrice}>${product.price}</Text>
-              <View style={styles.buttonContainer}>
-                <Pressable
-                  style={({ pressed }) => [
-                    styles.buttonAdd,
-                    { backgroundColor: pressed ? "#512da8" : "#9575cd" },
-                  ]}
-                  onPress={() => {
-                    Alert.alert(
-                      "Agregado al carrito",
-                      `${product.name} Fue agregado al carrito.`
-                    );
-                  }}
-                >
-                  <Text style={styles.addIcon}>🛒</Text>
-                  <Text style={styles.buttonText}>Agregar</Text>
-                </Pressable>
-                <Pressable
-                  style={({ pressed }) => [
-                    styles.buttonDetails,
-                    { backgroundColor: pressed ? "#ede7f6" : "#d1c4e9" },
-                  ]}
-                  onPress={() => openModal(product)}
-                >
-                  <Text style={styles.detailsIcon}>🔍</Text>
-                  <Text style={styles.detailsText}>Detalles</Text>
-                </Pressable>
+        <View style={styles.cardsContainer}>
+          {products.map((product) => (
+            <View key={product.id} style={styles.viewCard}>
+              <View style={styles.imageContainer}>
+                <Image source={product.image} style={styles.productImage} />
+              </View>
+              <View style={styles.productDetails}>
+                <Text style={styles.productName}>{product.name}</Text>
+                <Text style={styles.productPrice}>${product.price}</Text>
+                <View style={styles.buttonContainer}>
+                  <Pressable
+                    style={({ pressed }) => [
+                      styles.buttonAdd,
+                      { backgroundColor: pressed ? "#512da8" : "#9575cd" },
+                    ]}
+                    onPress={() => {
+                      Alert.alert(
+                        "Agregado al carrito",
+                        `${product.name} Fue agregado al carrito.`
+                      );
+                    }}
+                  >
+                    <Text style={styles.addIcon}>🛒</Text>
+                    <Text style={styles.buttonText}>Agregar</Text>
+                  </Pressable>
+                  <Pressable
+                    style={({ pressed }) => [
+                      styles.buttonDetails,
+                      { backgroundColor: pressed ? "#9575cd" : "#d1c4e9" },
+                    ]}
+                    onPress={() => openModal(product)}
+                  >
+                    <Text style={styles.detailsIcon}>🔍</Text>
+                    <Text style={styles.detailsText}>Detalles</Text>
+                  </Pressable>
+                </View>
               </View>
             </View>
-          </View>
-        ))}
+          ))}
+        </View>
       </ScrollView>
 
-      {/* Modal de detalles */}
       <Modal
         visible={modalVisible}
         animationType="slide"
@@ -207,20 +224,38 @@ export default function Cart() {
 
 const styles = StyleSheet.create({
   ViewTop: {
-    marginTop: 100,
+    marginTop: 40,
     marginLeft: 25,
     marginRight: 25,
   },
-  viewCard: {
-    marginTop: 20,
-    borderRadius: 10,
-    marginLeft: 20,
-    marginRight: 20,
-    backgroundColor: "#ede7f6",
-    height: "auto",
-    flexDirection: "row",
+  header: {
+    backgroundColor: "#9575cd",
+    paddingVertical: 20,
     alignItems: "center",
-    padding: 15,
+    justifyContent: "center",
+    elevation: 5,
+  },
+  headerText: {
+    color: "#fff",
+    fontSize: 24,
+    fontWeight: "bold",
+    letterSpacing: 1,
+    marginTop: 20,
+  },
+
+  cardsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+    marginTop: 20,
+  },
+  viewCard: {
+    width: "48%",
+    borderRadius: 10,
+    backgroundColor: "#ede7f6",
+    marginBottom: 20,
+    padding: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
@@ -228,19 +263,18 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   imageContainer: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 10,
   },
   productImage: {
-    width: 100,
-    height: 100,
+    width: "100%",
+    height: 120,
     borderRadius: 8,
+    resizeMode: "cover",
   },
   productDetails: {
-    flex: 2,
-    paddingLeft: 15,
-    justifyContent: "space-between",
+    alignItems: "flex-start",
   },
   productName: {
     fontSize: 18,
@@ -259,7 +293,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     lineHeight: 20,
   },
-
   buttonContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -307,7 +340,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "600",
   },
-  // Modal styles
+
   modalOverlay: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.4)",
