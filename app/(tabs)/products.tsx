@@ -171,7 +171,7 @@ export default function Products() {
 
       <Modal
         visible={modalVisible}
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         onRequestClose={closeModal}
       >
