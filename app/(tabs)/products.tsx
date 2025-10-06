@@ -29,7 +29,7 @@ interface Details {
   autor: string;
 }
 
-export default function Cart() {
+export default function Products() {
   const colorScheme = useColorScheme();
   const colors = colorScheme === "dark" ? Colors.dark : Colors.light;
 
